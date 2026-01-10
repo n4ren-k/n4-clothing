@@ -394,52 +394,72 @@
       .card > a{ grid-template-rows: 190px auto; }
     }
 
-    /* ---------------- OWNER STRIP ---------------- */
-    .owners{
-      padding: 1.1rem 0 2rem;
-    }
+    /* Bigger owner strip (panel + rows) */
+.owners{
+  padding: 1.6rem 0 2.4rem;
+}
 
-    .owner-panel{
-      border-radius: var(--radius);
-      padding: 1.1rem;
-      display: grid;
-      gap: .85rem;
-    }
+.owner-panel{
+  border-radius: var(--radius);
+  padding: 1.45rem;
+  display: grid;
+  gap: 1.15rem;
+}
 
-    .person{
-      display: grid;
-      grid-template-columns: 52px 1fr;
-      gap: .9rem;
-      align-items: center;
-      padding: .65rem .65rem;
-      border-radius: var(--radius-sm);
-      border: 1px solid rgba(11,11,11,0.10);
-      background: rgba(255,255,255,0.14);
-    }
+/* Bigger row + spacing + text scale */
+.person{
+  --avatarSize: 84px;              /* change this to scale everything */
+  display: grid;
+  grid-template-columns: var(--avatarSize) 1fr;
+  gap: 1.05rem;
+  align-items: center;
+  padding: 1rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(11,11,11,0.10);
+  background: rgba(255,255,255,0.14);
+}
 
-    .avatar{
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 30% 25%, rgba(255,255,255,0.55), transparent 55%),
-        linear-gradient(135deg, rgba(11,11,11,0.10), rgba(255,255,255,0.22)),
-        linear-gradient(135deg, rgba(255, 211, 90, 0.35), rgba(255, 138, 42, 0.25), rgba(216, 90, 18, 0.22));
-      border: 1px solid rgba(11,11,11,0.12);
-      box-shadow: 0 10px 22px rgba(11,11,11,0.10);
-    }
+/* Bigger circle + LOCK image inside */
+.avatar{
+  width: var(--avatarSize);
+  height: var(--avatarSize);
+  border-radius: 50%;
+  overflow: hidden;                 /* IMPORTANT: clips image to circle */
+  position: relative;
 
-    .role{
-      margin: 0;
-      font-weight: 800;
-      letter-spacing: -0.01em;
-      font-size: 1.05rem;
-    }
-    .handle{
-      margin: .12rem 0 0;
-      color: rgba(11,11,11,0.72);
-      font-weight: 650;
-    }
+  /* fallback background if image fails */
+  background:
+    radial-gradient(circle at 30% 25%, rgba(255,255,255,0.55), transparent 55%),
+    linear-gradient(135deg, rgba(11,11,11,0.10), rgba(255,255,255,0.22)),
+    linear-gradient(135deg, rgba(255, 211, 90, 0.35), rgba(255, 138, 42, 0.25), rgba(216, 90, 18, 0.22));
+
+  border: 1px solid rgba(11,11,11,0.12);
+  box-shadow: 0 10px 22px rgba(11,11,11,0.10);
+}
+
+/* Perfect crop inside circle */
+.avatar-img{
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;                /* fills circle, crops edges */
+  object-position: center;
+  border-radius: 50%;
+}
+
+.role{
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  font-size: 1.2rem;                /* bigger */
+}
+
+.handle{
+  margin: .18rem 0 0;
+  color: rgba(11,11,11,0.72);
+  font-weight: 650;
+  font-size: 1.05rem;               /* bigger */
+}
 
     /* ---------------- FOOTER ---------------- */
     footer{
@@ -892,7 +912,9 @@
       <div class="container">
         <div class="owner-panel glass">
           <div class="person" aria-label="Owner">
-            <div class="avatar" aria-hidden="true" title="Profile picture placeholder"></div>
+            <div class="avatar" title="Profile picture">
+  <img class="avatar-img" src="https://tr.rbxcdn.com/30DAY-Avatar-1443329B133AE00681EA6BE9D511A290-Png/720/720/Avatar/Webp/noFilter" alt="Roblox avatar for @arenhydradrip" loading="lazy">
+</div>
             <div>
               <p class="role">Owner</p>
               <p class="handle">@arenhydradrip</p>
@@ -900,7 +922,9 @@
           </div>
 
           <div class="person" aria-label="Co Owner">
-            <div class="avatar" aria-hidden="true" title="Profile picture placeholder"></div>
+            <div class="avatar" title="Profile picture">
+  <img class="avatar-img" src="https://tr.rbxcdn.com/30DAY-AvatarHeadshot-6B95F4AD1382DCCF23156FDB97276C6C-Png/150/150/AvatarHeadshot/Webp/noFilter" alt="Roblox avatar for @DemigodNinja01" loading="lazy">
+</div>
             <div>
               <p class="role">Co Owner</p>
               <p class="handle">@DemigodNinja01</p>
