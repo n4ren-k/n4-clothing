@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="N4 Clothing Support — Contact Form" />
+  <title>N4 Clothing — Support</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --gold: #ffd35a;
+      --orange: #ff8a2a;
+      --burnt: #d85a12;
+
+      --black: #0b0b0b;
+      --ink: rgba(11,11,11,0.88);
+
+      --stroke: rgba(11,11,11,0.12);
+
+      --shadow: 0 14px 40px rgba(11,11,11,0.14);
+      --shadow-soft: 0 10px 26px rgba(11,11,11,0.12);
+
+      --radius: 18px;
+      --radius-sm: 14px;
+
+      --container: 1120px;
+
+      --ease: cubic-bezier(.2,.8,.2,1);
+      --dur: 700ms;
+
+      --focus: 0 0 0 3px rgba(11,11,11,0.18), 0 0 0 7px rgba(255,255,255,0.35);
+    }
+
+    *{ box-sizing: border-box; }
+    html{ scroll-behavior: smooth; }
+    body{
+      margin: 0;
+      color: var(--black);
+      font-family: "Space Grotesk", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      line-height: 1.35;
+      background:
+        radial-gradient(1200px 700px at 15% 12%, rgba(255, 255, 255, 0.38), transparent 55%),
+        radial-gradient(900px 600px at 85% 18%, rgba(255,255,255,0.22), transparent 60%),
+        linear-gradient(135deg, var(--gold) 0%, var(--orange) 44%, var(--burnt) 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
+      mix-blend-mode: soft-light;
+      opacity: .22;
+    }
+
+    a{ color: inherit; text-decoration: none; }
+    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible{
+      outline: none;
+      box-shadow: var(--focus);
+      border-radius: 10px;
+    }
+
+    .container{
+      width: min(var(--container), calc(100% - 2rem));
+      margin-inline: auto;
+    }
+
+    .glass{
+      background: linear-gradient(180deg, rgba(255,255,255,0.34), rgba(255,255,255,0.18));
+      border: 1px solid var(--stroke);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: var(--shadow-soft);
+    }
+
+    /* ---------------- NAV ---------------- */
+    header{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: .85rem 0;
+    }
+
+    .nav{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: .85rem 1rem;
+      border-radius: 999px;
+      transform: translateY(-8px);
+      opacity: 0;
+      transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+    }
+
+    .loaded .nav{ opacity: 1; transform: translateY(0); }
+
+    .logo{
+      display: inline-flex;
+      align-items: baseline;
+      gap: .55rem;
+      font-family: "Orbitron", "Space Grotesk", sans-serif;
+      letter-spacing: 0.04em;
+      font-weight: 800;
+      color: var(--black);
+      user-select: none;
+    }
+    .logo .mark{
+      font-size: 1.05rem;
+      padding: .35rem .6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(11,11,11,0.14);
+      background: rgba(255,255,255,0.22);
+      box-shadow: 0 10px 22px rgba(11,11,11,0.10);
+    }
+
+    nav ul{
+      list-style: none;
+      display: flex;
+      gap: .6rem;
+      padding: 0;
+      margin: 0;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-link{
+      position: relative;
+      font-weight: 650;
+      color: var(--ink);
+      padding: .55rem .65rem;
+      border-radius: 999px;
+      transition: transform 220ms var(--ease), background-color 220ms var(--ease);
+      white-space: nowrap;
+    }
+
+    .nav-link::after{
+      content:"";
+      position: absolute;
+      left: .65rem;
+      right: .65rem;
+      bottom: .35rem;
+      height: 2px;
+      background: rgba(11,11,11,0.72);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 240ms var(--ease);
+      border-radius: 10px;
+    }
+
+    .nav-link:hover{
+      background: rgba(255,255,255,0.22);
+      transform: translateY(-1px);
+    }
+    .nav-link:hover::after{ transform: scaleX(1); }
+
+    .nav-link[aria-current="page"]{
+      background: rgba(255,255,255,0.24);
+      border: 1px solid rgba(11,11,11,0.12);
+    }
+    .nav-link[aria-current="page"]::after{ transform: scaleX(1); }
+
+    /* ---------------- HERO ---------------- */
+    main{ padding-bottom: 2.8rem; }
+
+    .hero{
+      padding: clamp(2.8rem, 6.8vw, 5.2rem) 0 1.4rem;
+    }
+    .hero-inner{
+      display: grid;
+      gap: .95rem;
+      align-items: start;
+      justify-items: start;
+    }
+
+    .hero-title{
+      margin: 0;
+      font-family: "Orbitron", "Space Grotesk", sans-serif;
+      font-weight: 850;
+      letter-spacing: -0.02em;
+      font-size: clamp(3rem, 7.8vw, 5.4rem);
+      line-height: 0.95;
+      color: var(--black);
+
+      opacity: 0;
+      transform: translateY(10px) scale(0.985);
+      transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+    }
+    .loaded .hero-title{ opacity: 1; transform: translateY(0) scale(1); }
+
+    .hero-sub{
+      margin: 0;
+      max-width: 64ch;
+      color: rgba(11,11,11,0.76);
+      font-weight: 600;
+
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity var(--dur) var(--ease) 120ms, transform var(--dur) var(--ease) 120ms;
+    }
+    .loaded .hero-sub{ opacity: 1; transform: translateY(0); }
+
+    .hero-chiprow{
+      display: flex;
+      gap: .7rem;
+      flex-wrap: wrap;
+      margin-top: .25rem;
+
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity var(--dur) var(--ease) 220ms, transform var(--dur) var(--ease) 220ms;
+    }
+    .loaded .hero-chiprow{ opacity: 1; transform: translateY(0); }
+
+    .chip{
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .55rem .75rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.16);
+      border: 1px solid rgba(11,11,11,0.12);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: rgba(11,11,11,0.86);
+      font-weight: 650;
+      transition: transform 220ms var(--ease), background-color 220ms var(--ease), box-shadow 220ms var(--ease);
+    }
+    .chip:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.24);
+      box-shadow: 0 14px 26px rgba(11,11,11,0.12);
+    }
+    .chip svg{ width: 18px; height: 18px; }
+
+    /* ---------------- SUPPORT FORM ---------------- */
+    .section{ padding: 1rem 0 2.2rem; }
+
+    .panel{
+      border-radius: var(--radius);
+      padding: clamp(1rem, 2.4vw, 1.35rem);
+    }
+
+    .grid{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    @media (min-width: 920px){
+      .grid{
+        grid-template-columns: 1.15fr .85fr;
+        align-items: start;
+      }
+    }
+
+    .panel h2{
+      margin: 0 0 .35rem;
+      font-size: 1.6rem;
+      letter-spacing: -0.02em;
+    }
+    .muted{
+      margin: 0 0 1rem;
+      color: rgba(11,11,11,0.72);
+      font-weight: 600;
+    }
+
+    form{ display: grid; gap: .9rem; }
+
+    .row{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: .85rem;
+    }
+    @media (min-width: 680px){
+      .row.two{ grid-template-columns: 1fr 1fr; }
+    }
+
+    label{
+      display: block;
+      font-weight: 700;
+      margin-bottom: .35rem;
+      letter-spacing: -0.01em;
+    }
+
+    input, textarea, select{
+      width: 100%;
+      border-radius: 14px;
+      padding: .8rem .85rem;
+      border: 1px solid rgba(11,11,11,0.16);
+      background: rgba(255,255,255,0.22);
+      color: rgba(11,11,11,0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 10px 22px rgba(11,11,11,0.07);
+      transition: transform 180ms var(--ease), background-color 220ms var(--ease), border-color 220ms var(--ease);
+    }
+    textarea{ min-height: 140px; resize: vertical; }
+    input:hover, textarea:hover, select:hover{
+      background: rgba(255,255,255,0.28);
+      transform: translateY(-1px);
+    }
+
+    .help{
+      margin: .35rem 0 0;
+      color: rgba(11,11,11,0.68);
+      font-weight: 600;
+      font-size: .92rem;
+    }
+
+    .check{
+      display: flex;
+      gap: .7rem;
+      align-items: flex-start;
+      padding: .65rem .75rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(11,11,11,0.12);
+      background: rgba(255,255,255,0.14);
+    }
+    .check input{
+      width: 18px;
+      height: 18px;
+      margin-top: .18rem;
+      box-shadow: none;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      transform: none;
+    }
+    .check p{
+      margin: 0;
+      color: rgba(11,11,11,0.72);
+      font-weight: 650;
+      line-height: 1.25;
+    }
+
+    .actions{
+      display: flex;
+      gap: .75rem;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: .15rem;
+    }
+
+    .btn{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .55rem;
+      padding: .75rem 1rem;
+      border-radius: 999px;
+      border: 1px solid rgba(11,11,11,0.16);
+      background: rgba(255,255,255,0.26);
+      color: rgba(11,11,11,0.92);
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      transition: transform 220ms var(--ease), background-color 220ms var(--ease), box-shadow 220ms var(--ease);
+      user-select: none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.34);
+      box-shadow: var(--shadow-soft);
+    }
+    .btn:disabled{
+      opacity: .65;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    .btn svg{ width: 18px; height: 18px; }
+
+    .status{
+      margin: 0;
+      font-weight: 650;
+      color: rgba(11,11,11,0.78);
+    }
+    .status.good{ color: rgba(11,11,11,0.88); }
+    .status.bad{ color: rgba(90, 10, 10, 0.86); }
+
+    /* Side info card */
+    .info{ display: grid; gap: .85rem; }
+    .info-card{
+      border-radius: var(--radius);
+      padding: 1rem;
+    }
+    .info-card h3{
+      margin: 0 0 .35rem;
+      font-size: 1.1rem;
+      letter-spacing: -0.01em;
+    }
+    .info-card p{
+      margin: 0;
+      color: rgba(11,11,11,0.72);
+      font-weight: 600;
+    }
+
+    .inline-link{
+      position: relative;
+      font-weight: 750;
+      color: rgba(11,11,11,0.88);
+      padding-bottom: 2px;
+    }
+    .inline-link::after{
+      content:"";
+      position: absolute;
+      left: 0; right: 0; bottom: -2px;
+      height: 2px;
+      background: rgba(11,11,11,0.78);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 240ms var(--ease);
+      border-radius: 10px;
+    }
+    .inline-link:hover::after{ transform: scaleX(1); }
+
+    /* Reveal */
+    [data-reveal]{
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 620ms var(--ease), transform 620ms var(--ease);
+      will-change: transform, opacity;
+    }
+    .reveal{
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+
+    footer{
+      padding: 1.2rem 0 2.1rem;
+      color: rgba(11,11,11,0.72);
+      font-weight: 650;
+      text-align: center;
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      html{ scroll-behavior: auto; }
+      .nav, .hero-title, .hero-sub, .hero-chiprow, [data-reveal]{
+        transition: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+      }
+      .btn, .nav-link, .chip, input, textarea, select{ transition: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <header aria-label="Top navigation">
+    <div class="container">
+      <div class="nav glass" role="navigation" aria-label="Primary">
+        <a class="logo" href="index.html" aria-label="Go to N4 Clothing home">
+          <span class="mark" aria-hidden="true">N4</span>
+        </a>
+
+        <nav aria-label="Top links">
+          <ul>
+  <li>
+    <a class="nav-link" href="https://www.roblox.com/groups/6033024/N4-Clothing-Roblox" target="_blank" rel="noopener noreferrer">
+      Roblox Group
+    </a>
+  </li>
+  <li>
+    <a class="nav-link" href="index.html">
+      Home
+    </a>
+  </li>
+</ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-label="Support hero">
+      <div class="container">
+        <div class="hero-inner">
+          <h1 class="hero-title">Support</h1>
+          <p class="hero-sub">
+            Need help with an N4 drop, a link, or anything brand-related? Send a message below.
+          </p>      
+    </section>
+
+    <section id="support" class="section" aria-label="Support form section">
+      <div class="container">
+        <div class="grid">
+          <section class="panel glass" data-reveal aria-label="Send a support message">
+            <h2>Send a message</h2>
+            <p class="muted">
+              Enter your details here.
+            </p>
+
+            <!-- NOTE: action is set by JS so you only paste your Formspree link ONE time. -->
+            <form id="supportForm" action="" method="POST" novalidate>
+              <!-- Formspree honeypot -->
+              <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;" aria-hidden="true">
+              <input type="hidden" name="_subject" value="N4 Clothing — Support Request">
+
+              <div class="row two">
+                <div>
+                  <label for="name">Name</label>
+                  <input id="name" name="name" type="text" autocomplete="name" placeholder="Your name" />
+                  <p class="help">Optional.</p>
+                </div>
+                <div>
+                  <label for="roblox">Roblox username</label>
+                  <input id="roblox" name="roblox_username" type="text" autocomplete="off" placeholder="@youruser" />
+                  <p class="help">Optional, but helpful.</p>
+                </div>
+              </div>
+
+              <div class="row two">
+                <div>
+                  <label for="email">Email <span aria-hidden="true">*</span></label>
+                  <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required />
+                  <p class="help">We’ll reply here.</p>
+                </div>
+                <div>
+                  <label for="topic">Topic</label>
+                  <select id="topic" name="topic">
+                    <option value="General">General</option>
+                    <option value="Item Link / Purchase">Item Link / Purchase</option>
+                    <option value="Bug / Website">Bug / Website</option>
+                    <option value="Partnership">Partnership</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <p class="help">Pick the closest category.</p>
+                </div>
+              </div>
+
+              <div>
+                <label for="message">Message <span aria-hidden="true">*</span></label>
+                <textarea id="message" name="message" placeholder="Tell us what you need help with..." required></textarea>
+                <p class="help">Include relevant links or item names if possible.</p>
+              </div>
+
+              <div class="check">
+                <input id="agree" name="agree" type="checkbox" required aria-label="Confirmation checkbox">
+                <div>
+                  <p><strong>Required:</strong> I understand this is N4 Clothing support and not official Roblox support.</p>
+                  <p class="help" style="margin:.35rem 0 0;">If this is a Roblox account issue, contact Roblox Support directly.</p>
+                </div>
+              </div>
+
+              <div class="actions">
+                <button class="btn" type="submit" id="submitBtn" aria-label="Send support message">
+                  Send
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M22 2 11 13" stroke="rgba(11,11,11,.82)" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M22 2 15 22l-4-9-9-4L22 2Z" stroke="rgba(11,11,11,.82)" stroke-width="2" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+
+                <p id="formStatus" class="status" role="status" aria-live="polite"></p>
+              </div>
+            </form>
+          </section>
+
+          <aside class="info" aria-label="Support info" data-reveal>
+            <div class="info-card glass">
+              <h3>Fastest help</h3>
+              <p>
+                For anything store/group-related, start with the
+                <a class="inline-link" href="https://www.roblox.com/groups/6033024/N4-Clothing-Roblox" target="_blank" rel="noopener noreferrer">
+                  Roblox Group
+                </a>.
+              </p>
+            </div>
+
+            <div class="info-card glass">
+              <h3>What to include</h3>
+              <p>Your Roblox username, the item name (or ID), and what you expected vs. what happened.</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer aria-label="Footer">
+    <div class="container">© 2026 N4 Clothing</div>
+  </footer>
+
+  <script>
+    /*************************************************************
+     * PASTE YOUR FORMSPREE ENDPOINT HERE (only once):
+     * Example: https://formspree.io/f/abcdwxyz
+     *************************************************************/
+    const FORMSPREE_ENDPOINT = "https://formspree.io/f/mykkgzal";
+
+    // Page-load sequence trigger
+    window.addEventListener("DOMContentLoaded", () => {
+      requestAnimationFrame(() => document.documentElement.classList.add("loaded"));
+    });
+
+    // Reveal-on-scroll for panels
+    (() => {
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const items = document.querySelectorAll("[data-reveal]");
+      if (reduceMotion) { items.forEach(el => el.classList.add("reveal")); return; }
+
+      const io = new IntersectionObserver((entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("reveal");
+            io.unobserve(entry.target);
+          }
+        }
+      }, { threshold: 0.12, rootMargin: "0px 0px -10% 0px" });
+
+      items.forEach(el => io.observe(el));
+    })();
+
+    // Formspree AJAX submit
+    (() => {
+      const form = document.getElementById("supportForm");
+      const status = document.getElementById("formStatus");
+      const btn = document.getElementById("submitBtn");
+
+      // Set the form action from the single config constant
+      form.action = FORMSPREE_ENDPOINT;
+
+      // Guard: if user hasn't pasted endpoint yet
+      const looksPlaceholder = !FORMSPREE_ENDPOINT || FORMSPREE_ENDPOINT.includes("PASTE_YOURS_HERE");
+      if (looksPlaceholder) {
+        status.textContent = "Paste your Formspree link in the JS (FORMSPREE_ENDPOINT) to enable sending.";
+        status.className = "status bad";
+        btn.disabled = true;
+        return;
+      }
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        if (!form.reportValidity()) return;
+
+        status.textContent = "Sending...";
+        status.className = "status";
+        btn.disabled = true;
+
+        try {
+          const formData = new FormData(form);
+          const res = await fetch(form.action, {
+            method: "POST",
+            body: formData,
+            headers: { "Accept": "application/json" }
+          });
+
+          if (res.ok) {
+            status.textContent = "Sent. We’ll get back to you soon.";
+            status.className = "status good";
+            form.reset();
+          } else {
+            let data = null;
+            try { data = await res.json(); } catch {}
+            status.textContent = (data && data.errors && data.errors[0] && data.errors[0].message)
+              ? data.errors[0].message
+              : "Something went wrong. Please try again.";
+            status.className = "status bad";
+          }
+        } catch (err) {
+          status.textContent = "Network error. Try again, or open this page in Safari.";
+          status.className = "status bad";
+        } finally {
+          btn.disabled = false;
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
