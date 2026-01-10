@@ -521,7 +521,13 @@
                 </div>
                 <div>
                   <label for="roblox">Roblox username</label>
-                  <input id="roblox" name="roblox_username" type="text" autocomplete="off" placeholder="@youruser" />
+                  <input id="roblox"
+       name="roblox_username"
+       type="text"
+       autocomplete="off"
+       placeholder="@youruser"
+       pattern="^@(?=.{4,}$)[A-Za-z0-9](?:[A-Za-z0-9 _]*[A-Za-z0-9])$"
+       title="Must start with @. At least 3 characters after @. Allowed: letters, numbers, spaces, underscore. No leading/trailing space or underscore." />
                   <p class="help">Optional, but helpful.</p>
                 </div>
               </div>
