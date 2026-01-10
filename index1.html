@@ -317,6 +317,14 @@
       font-size: .92rem;
     }
 
+    .field-error{
+  margin: .35rem 0 0;
+  min-height: 1.1em; /* reserves space even when empty */
+  color: rgba(120, 14, 14, .92);
+  font-weight: 650;
+  font-size: .92rem;
+}
+
     .check{
       display: flex;
       gap: .7rem;
@@ -521,14 +529,17 @@
                 </div>
                 <div>
                   <label for="roblox">Roblox username</label>
-                  <input id="roblox"
+<input id="roblox"
        name="roblox_username"
        type="text"
        autocomplete="off"
        placeholder="@youruser"
        pattern="^@(?=.{4,}$)[A-Za-z0-9](?:[A-Za-z0-9 _]*[A-Za-z0-9])$"
-       title="Must start with @. At least 3 characters after @. Allowed: letters, numbers, spaces, underscore. No leading/trailing space or underscore." />
-                  <p class="help">Optional, but helpful.</p>
+       aria-describedby="robloxError robloxHelp" />
+
+<p class="field-error" id="robloxError" aria-live="polite"></p>
+
+<p class="help" id="robloxHelp">Optional, but helpful.</p>
                 </div>
               </div>
 
@@ -650,6 +661,33 @@
       const form = document.getElementById("supportForm");
       const status = document.getElementById("formStatus");
       const btn = document.getElementById("submitBtn");
+      const roblox = document.getElementById("roblox");
+const robloxError = document.getElementById("robloxError");
+
+const ROBLOX_RULES =
+  "Must start with @. Then at least 3 characters. Allowed: letters, numbers, spaces, _. No spaces/_ at the start or end.";
+
+function updateRobloxError() {
+  const v = roblox.value;
+
+  // Optional field: empty is OK
+  if (!v) {
+    roblox.setCustomValidity("");
+    robloxError.textContent = "";
+    return;
+  }
+
+  if (roblox.validity.patternMismatch) {
+    roblox.setCustomValidity(ROBLOX_RULES); // ensures submit shows same rule
+    robloxError.textContent = ROBLOX_RULES; // red text under field
+  } else {
+    roblox.setCustomValidity("");
+    robloxError.textContent = "";
+  }
+}
+
+roblox.addEventListener("input", updateRobloxError);
+roblox.addEventListener("blur", updateRobloxError);
 
       // Set the form action from the single config constant
       form.action = FORMSPREE_ENDPOINT;
@@ -665,6 +703,7 @@
 
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
+        updateRobloxError();
         if (!form.reportValidity()) return;
 
         status.textContent = "Sending...";
