@@ -319,7 +319,6 @@
 
     .field-error{
   margin: .35rem 0 0;
-  min-height: 1.1em; /* reserves space even when empty */
   color: rgba(120, 14, 14, .92);
   font-weight: 650;
   font-size: .92rem;
@@ -534,10 +533,10 @@
        type="text"
        autocomplete="off"
        placeholder="@youruser"
-       pattern="^@(?=.{4,}$)[A-Za-z0-9](?:[A-Za-z0-9 _]*[A-Za-z0-9])$"
+       pattern="^@[A-Za-z0-9][A-Za-z0-9 _]+[A-Za-z0-9]$"
        aria-describedby="robloxError robloxHelp" />
 
-<p class="field-error" id="robloxError" aria-live="polite"></p>
+<p class="field-error" id="robloxError" aria-live="polite" hidden></p>
 
 <p class="help" id="robloxHelp">Optional, but helpful.</p>
                 </div>
@@ -665,25 +664,28 @@
 const robloxError = document.getElementById("robloxError");
 
 const ROBLOX_RULES =
-  "Must start with @. Then at least 3 characters. Allowed: letters, numbers, spaces, _. No spaces/_ at the start or end.";
+  "Must start with @. Then at least 3 characters. Allowed: letters, numbers, spaces, underscore (_). No leading/trailing spaces or underscores.";
 
 function updateRobloxError() {
   const v = roblox.value;
 
   // Optional field: empty is OK
   if (!v) {
-    roblox.setCustomValidity("");
-    robloxError.textContent = "";
-    return;
-  }
+  roblox.setCustomValidity("");
+  robloxError.textContent = "";
+  robloxError.hidden = true;
+  return;
+}
 
   if (roblox.validity.patternMismatch) {
-    roblox.setCustomValidity(ROBLOX_RULES); // ensures submit shows same rule
-    robloxError.textContent = ROBLOX_RULES; // red text under field
-  } else {
-    roblox.setCustomValidity("");
-    robloxError.textContent = "";
-  }
+  roblox.setCustomValidity(ROBLOX_RULES);
+  robloxError.textContent = ROBLOX_RULES;
+  robloxError.hidden = false;
+} else {
+  roblox.setCustomValidity("");
+  robloxError.textContent = "";
+  robloxError.hidden = true;
+}
 }
 
 roblox.addEventListener("input", updateRobloxError);
