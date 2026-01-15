@@ -490,12 +490,6 @@
       }
       .btn, .nav-link, .hero-cta{ transition: none !important; }
     }
-    
-    /* Let section headers wrap nicely with search */
-.section-head{
-  flex-wrap: wrap;
-  align-items: center;
-}
 
 /* Screen-reader only label */
 .sr-only{
@@ -510,6 +504,13 @@
   border: 0;
 }
 
+/* Row under the subtitle */
+.search-row{
+  margin: .85rem 0 0;
+  display: flex;
+  justify-content: flex-start;
+}
+
 /* Search bar */
 .search{
   position: relative;
@@ -518,7 +519,7 @@
   gap: .55rem;
   padding: .55rem .65rem;
   border-radius: 999px;
-  min-width: min(420px, 100%);
+  width: min(520px, 100%);
 }
 
 .search input{
@@ -566,10 +567,13 @@
 }
 
 .no-results{
-  margin: .25rem 0 1rem;
+  margin: .6rem 0 1rem;
   color: rgba(11,11,11,0.74);
   font-weight: 650;
 }
+
+/* Optional: prevent browser’s built-in clear icon (so you only see your X) */
+.search input::-webkit-search-cancel-button{ -webkit-appearance: none; }
   </style>
 
   <!-- SEO -->
@@ -648,7 +652,9 @@
     <h2 class="section-title">Featured Drops</h2>
     <p class="section-sub">Check out the clothing made by N4!</p>
   </div>
+</div>
 
+<div class="search-row">
   <div class="search glass" role="search" aria-label="Search items">
     <label class="sr-only" for="itemSearch">Search for an item</label>
 
@@ -663,8 +669,7 @@
       id="itemSearch"
       type="search"
       placeholder="Search for an item"
-      autocomplete="off"
-      aria-label="Search for an item" />
+      autocomplete="off" />
 
     <button type="button" id="clearSearch" class="search-clear" aria-label="Clear search" hidden>
       &times;
