@@ -490,90 +490,6 @@
       }
       .btn, .nav-link, .hero-cta{ transition: none !important; }
     }
-
-/* Screen-reader only label */
-.sr-only{
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0,0,0,0);
-  white-space: nowrap;
-  border: 0;
-}
-
-/* Row under the subtitle */
-.search-row{
-  margin: .85rem 0 0;
-  display: flex;
-  justify-content: flex-start;
-}
-
-/* Search bar */
-.search{
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: .55rem;
-  padding: .55rem .65rem;
-  border-radius: 999px;
-  width: min(520px, 100%);
-}
-
-.search input{
-  width: 100%;
-  border: 0;
-  outline: none;
-  background: transparent;
-  color: rgba(11,11,11,0.92);
-  font-weight: 650;
-  font-size: 0.98rem;
-  padding: .25rem 2.2rem .25rem 2rem; /* space for icons */
-}
-
-.search input::placeholder{
-  color: rgba(11,11,11,0.62);
-  font-weight: 650;
-}
-
-.search-icon{
-  position: absolute;
-  left: .8rem;
-  width: 18px;
-  height: 18px;
-  pointer-events: none;
-}
-
-.search-clear{
-  position: absolute;
-  right: .55rem;
-  width: 34px;
-  height: 34px;
-  border-radius: 999px;
-  border: 1px solid rgba(11,11,11,0.14);
-  background: rgba(255,255,255,0.18);
-  color: rgba(11,11,11,0.82);
-  font-size: 1.25rem;
-  line-height: 1;
-  cursor: pointer;
-  transition: transform 220ms var(--ease), background-color 220ms var(--ease);
-}
-
-.search-clear:hover{
-  transform: translateY(-1px);
-  background: rgba(255,255,255,0.26);
-}
-
-.no-results{
-  margin: .6rem 0 1rem;
-  color: rgba(11,11,11,0.74);
-  font-weight: 650;
-}
-
-/* Optional: prevent browser’s built-in clear icon (so you only see your X) */
-.search input::-webkit-search-cancel-button{ -webkit-appearance: none; }
   </style>
 
   <!-- SEO -->
@@ -647,149 +563,17 @@
 
     <!-- GRID -->
     <section class="section" aria-label="Featured drops">
-      <div class="section-head">
-  <div>
-    <h2 class="section-title">Featured Drops</h2>
-    <p class="section-sub">Check out the clothing made by N4!</p>
-  </div>
-</div>
-
-<div class="search-row">
-  <div class="search glass" role="search" aria-label="Search items">
-    <label class="sr-only" for="itemSearch">Search for an item</label>
-
-    <svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z"
-            stroke="rgba(11,11,11,.78)" stroke-width="2"/>
-      <path d="M16.5 16.5 21 21"
-            stroke="rgba(11,11,11,.78)" stroke-width="2" stroke-linecap="round"/>
-    </svg>
-
-    <input
-      id="itemSearch"
-      type="search"
-      placeholder="Search for an item"
-      autocomplete="off" />
-
-    <button type="button" id="clearSearch" class="search-clear" aria-label="Clear search" hidden>
-      &times;
-    </button>
-  </div>
-</div>
-
-<p id="noResults" class="no-results" hidden>No items match your search.</p>
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Featured Drops</h2>
+            <p class="section-sub">Check out the clothing made by N4!</p>
+          </div>
+        </div>
 
         <div class="grid" aria-label="Clothing items grid">
-          <!-- Items -->
-          <!-- Card -->
-<article class="card glass" data-reveal data-assetid="91515027112017" style="transition-delay: 0ms;">
-  <a href="https://www.roblox.com/catalog/91515027112017/black-sweater-y2k-emo-goth-streetwear-aesthetic"
-     target="_blank" rel="noopener noreferrer"
-     aria-label="black sweater y2k emo goth streetwear aesthetic — Buy (opens in new tab)">
-    <div class="thumb">
-  <img class="thumb-img"
-       src="https://tr.rbxcdn.com/180DAY-c1e43bd64d0a3f2f0a5e87d3c6f1479d/420/420/Shirt/Webp/noFilter"
-       alt="black sweater y2k emo goth streetwear aesthetic thumbnail"
-       loading="lazy">
-</div>
-    <div class="card-body">
-      <h3 class="card-title">black sweater y2k emo goth streetwear aesthetic</h3>
-      <div class="card-actions">
-        <p class="price-hint">5 Robux</p>
-        <span class="btn" role="button" aria-label="Buy black sweater y2k emo goth streetwear aesthetic">
-          Buy
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M8 7h12M8 12h10M8 17h12" stroke="rgba(11,11,11,.82)" stroke-width="2" stroke-linecap="round"/>
-            <path d="M4 7h.01M4 12h.01M4 17h.01" stroke="rgba(11,11,11,.82)" stroke-width="4" stroke-linecap="round"/>
-          </svg>
-        </span>
-      </div>
-    </div>
-  </a>
-</article>
-          
-          <!-- Card -->
-<article class="card glass" data-reveal data-assetid="130296361968697" style="transition-delay: 0ms;">
-  <a href="https://www.roblox.com/catalog/130296361968697/black-tshirt-y2k-emo-goth-streetwear-aesthetic"
-     target="_blank" rel="noopener noreferrer"
-     aria-label="black tshirt y2k emo goth streetwear aesthetic — Buy (opens in new tab)">
-    <div class="thumb">
-  <img class="thumb-img"
-       src="https://tr.rbxcdn.com/180DAY-b9112146c424a8dc476ce404a05c095c/420/420/Shirt/Webp/noFilter"
-       alt="black tshirt y2k emo goth streetwear aesthetic thumbnail"
-       loading="lazy">
-</div>
-    <div class="card-body">
-      <h3 class="card-title">black tshirt y2k emo goth streetwear aesthetic</h3>
-      <div class="card-actions">
-        <p class="price-hint">5 Robux</p>
-        <span class="btn" role="button" aria-label="Buy black tshirt y2k emo goth streetwear aesthetic">
-          Buy
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M8 7h12M8 12h10M8 17h12" stroke="rgba(11,11,11,.82)" stroke-width="2" stroke-linecap="round"/>
-            <path d="M4 7h.01M4 12h.01M4 17h.01" stroke="rgba(11,11,11,.82)" stroke-width="4" stroke-linecap="round"/>
-          </svg>
-        </span>
-      </div>
-    </div>
-  </a>
-</article>
-          
-          <!-- Card -->
-<article class="card glass" data-reveal data-assetid="109658926430483" style="transition-delay: 0ms;">
-  <a href="https://www.roblox.com/catalog/109658926430483/y2k-skull-cross-tshirt-black-goth-emo-streetwear"
-     target="_blank" rel="noopener noreferrer"
-     aria-label="y2k skull cross tshirt black goth emo streetwear — Buy (opens in new tab)">
-    <div class="thumb">
-  <img class="thumb-img"
-       src="https://tr.rbxcdn.com/180DAY-cef1ceff081df77db4752c95c9fd057c/420/420/Shirt/Webp/noFilter"
-       alt="y2k skull cross tshirt black goth emo streetwear thumbnail"
-       loading="lazy">
-</div>
-    <div class="card-body">
-      <h3 class="card-title">y2k skull cross tshirt black goth emo streetwear</h3>
-      <div class="card-actions">
-        <p class="price-hint">5 Robux</p>
-        <span class="btn" role="button" aria-label="Buy y2k skull cross tshirt black goth emo streetwear">
-          Buy
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M8 7h12M8 12h10M8 17h12" stroke="rgba(11,11,11,.82)" stroke-width="2" stroke-linecap="round"/>
-            <path d="M4 7h.01M4 12h.01M4 17h.01" stroke="rgba(11,11,11,.82)" stroke-width="4" stroke-linecap="round"/>
-          </svg>
-        </span>
-      </div>
-    </div>
-  </a>
-</article>
-
-          <!-- Card -->
-<article class="card glass" data-reveal data-assetid="122149028827214" style="transition-delay: 0ms;">
-  <a href="https://www.roblox.com/catalog/122149028827214/y2k-skull-cross-sweater-black-goth-emo-streetwear"
-     target="_blank" rel="noopener noreferrer"
-     aria-label="y2k skull cross sweater black goth emo streetwear — Buy (opens in new tab)">
-    <div class="thumb">
-  <img class="thumb-img"
-       src="https://tr.rbxcdn.com/180DAY-20c30f27fad4158ede4d0bad1d0e2b2e/420/420/Shirt/Webp/noFilter"
-       alt="y2k skull cross sweater black goth emo streetwear thumbnail"
-       loading="lazy">
-</div>
-    <div class="card-body">
-      <h3 class="card-title">y2k skull cross sweater black goth emo streetwear</h3>
-      <div class="card-actions">
-        <p class="price-hint">5 Robux</p>
-        <span class="btn" role="button" aria-label="Buy y2k skull cross sweater black goth emo streetwear">
-          Buy
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M8 7h12M8 12h10M8 17h12" stroke="rgba(11,11,11,.82)" stroke-width="2" stroke-linecap="round"/>
-            <path d="M4 7h.01M4 12h.01M4 17h.01" stroke="rgba(11,11,11,.82)" stroke-width="4" stroke-linecap="round"/>
-          </svg>
-        </span>
-      </div>
-    </div>
-  </a>
-</article>
-          
-          <!-- Card -->
+          <!-- 13 items -->
+          <!-- Card 01 -->
 <article class="card glass" data-reveal data-assetid="107819740787547" style="transition-delay: 0ms;">
   <a href="https://www.roblox.com/catalog/107819740787547/N4-Grey-and-Black-Striped-Sweater"
      target="_blank" rel="noopener noreferrer"
@@ -816,7 +600,7 @@
   </a>
 </article>
 
-<!-- Card -->
+<!-- Card 02 -->
 <article class="card glass" data-reveal data-assetid="138723232708618" style="transition-delay: 50ms;">
   <a href="https://www.roblox.com/catalog/138723232708618/N4-Grey-Full-Sleeve-Crop-Top"
      target="_blank" rel="noopener noreferrer"
@@ -843,7 +627,7 @@
   </a>
 </article>
 
-<!-- Card -->
+<!-- Card 03 -->
 <article class="card glass" data-reveal data-assetid="87567690700633" style="transition-delay: 100ms;">
   <a href="https://www.roblox.com/catalog/87567690700633/N4-Camo-Green-and-Black-Striped-Sweater"
      target="_blank" rel="noopener noreferrer"
@@ -870,7 +654,7 @@
   </a>
 </article>
 
-<!-- Card -->
+<!-- Card 04 -->
 <article class="card glass" data-reveal data-assetid="88843725894808" style="transition-delay: 150ms;">
   <a href="https://www.roblox.com/catalog/88843725894808/N4-Camo-Green-Full-Sleeve-Crop-Top"
      target="_blank" rel="noopener noreferrer"
@@ -897,7 +681,7 @@
   </a>
 </article>
 
-<!-- Card -->
+<!-- Card 05 -->
 <article class="card glass" data-reveal data-assetid="119281912847785" style="transition-delay: 200ms;">
   <a href="https://www.roblox.com/catalog/119281912847785/N4-Dark-Yellow-and-Black-Striped-Sweater"
      target="_blank" rel="noopener noreferrer"
@@ -924,7 +708,7 @@
   </a>
 </article>
 
-<!-- Card -->
+<!-- Card 06 -->
 <article class="card glass" data-reveal data-assetid="127700894526745" style="transition-delay: 250ms;">
   <a href="https://www.roblox.com/catalog/127700894526745/N4-Yellow-Full-Sleeve-Crop-Top"
      target="_blank" rel="noopener noreferrer"
@@ -951,7 +735,7 @@
   </a>
 </article>
 
-<!-- Card -->
+<!-- Card 07 -->
 <article class="card glass" data-reveal data-assetid="125663584491129" style="transition-delay: 300ms;">
   <a href="https://www.roblox.com/catalog/125663584491129/N4-Red-and-Black-Striped-Sweater"
      target="_blank" rel="noopener noreferrer"
@@ -978,7 +762,7 @@
   </a>
 </article>
 
-<!-- Card -->
+<!-- Card 08 -->
 <article class="card glass" data-reveal data-assetid="103090379815564" style="transition-delay: 350ms;">
   <a href="https://www.roblox.com/catalog/103090379815564/N4-Red-Full-Sleeve-Crop-Top"
      target="_blank" rel="noopener noreferrer"
@@ -1005,7 +789,7 @@
   </a>
 </article>
 
-<!-- Card -->
+<!-- Card 09 -->
 <article class="card glass" data-reveal data-assetid="114233735143885" style="transition-delay: 400ms;">
   <a href="https://www.roblox.com/catalog/114233735143885/N4-Blue-and-Black-Striped-Sweater"
      target="_blank" rel="noopener noreferrer"
@@ -1032,7 +816,7 @@
   </a>
 </article>
 
-<!-- Card -->
+<!-- Card 10 -->
 <article class="card glass" data-reveal data-assetid="120129611145290" style="transition-delay: 450ms;">
   <a href="https://www.roblox.com/catalog/120129611145290/N4-Blue-Full-Sleeve-Crop-Top"
      target="_blank" rel="noopener noreferrer"
@@ -1059,7 +843,7 @@
   </a>
 </article>
 
-<!-- Card -->
+<!-- Card 11 -->
 <article class="card glass" data-reveal data-assetid="94665631872130" style="transition-delay: 500ms;">
   <a href="https://www.roblox.com/catalog/94665631872130/Realistic-Yellow-Puffer-Jacket"
      target="_blank" rel="noopener noreferrer"
@@ -1086,7 +870,7 @@
   </a>
 </article>
 
-<!-- Card -->
+<!-- Card 12 -->
 <article class="card glass" data-reveal data-assetid="132153968714399" style="transition-delay: 550ms;">
   <a href="https://www.roblox.com/catalog/132153968714399/ROCKSTAR-Hoodie-Y2K-Emo-Goth-Chain"
      target="_blank" rel="noopener noreferrer"
@@ -1113,7 +897,7 @@
   </a>
 </article>
 
-<!-- Card -->
+<!-- Card 13 -->
 <article class="card glass" data-reveal data-assetid="115963970248142" style="transition-delay: 600ms;">
   <a href="https://www.roblox.com/catalog/115963970248142/N4-Ripped-Blue-Jeans-with-White-Shoes"
      target="_blank" rel="noopener noreferrer"
@@ -1233,70 +1017,5 @@
       items.forEach(el => io.observe(el));
     })();
     </script>
-    
-    <script>
-  // ... keep your existing code above ...
-
-  // Search/filter Featured Drops
-  (() => {
-    const input = document.getElementById("itemSearch");
-    const clearBtn = document.getElementById("clearSearch");
-    const noResults = document.getElementById("noResults");
-
-    if (!input || !clearBtn) return;
-
-    const cards = Array.from(document.querySelectorAll(".grid .card"));
-
-    // Precompute searchable text for each card (title + link URL)
-    const searchText = new Map(
-      cards.map(card => {
-        const title = (card.querySelector(".card-title")?.textContent || "").toLowerCase();
-        const link = (card.querySelector("a")?.href || "").toLowerCase();
-        return [card, `${title} ${link}`];
-      })
-    );
-
-    function applyFilter() {
-      const q = input.value.trim().toLowerCase();
-      const tokens = q ? q.split(/\s+/).filter(Boolean) : [];
-
-      // show/hide the X button
-      clearBtn.hidden = tokens.length === 0;
-
-      let visibleCount = 0;
-
-      for (const card of cards) {
-        const haystack = searchText.get(card) || "";
-        const match = tokens.length === 0 || tokens.every(t => haystack.includes(t));
-
-        card.style.display = match ? "" : "none";
-        card.setAttribute("aria-hidden", match ? "false" : "true");
-
-        // Ensure matched cards are visible even if they haven't "revealed" yet
-        if (match) card.classList.add("reveal");
-
-        if (match) visibleCount++;
-      }
-
-      noResults.hidden = visibleCount !== 0;
-    }
-
-    input.addEventListener("input", applyFilter);
-
-    clearBtn.addEventListener("click", () => {
-      input.value = "";
-      input.focus();
-      applyFilter();
-    });
-
-    // Optional: ESC clears search
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        input.value = "";
-        applyFilter();
-      }
-    });
-  })();
-</script>
 </body>
 </html>
