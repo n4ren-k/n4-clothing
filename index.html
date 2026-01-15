@@ -272,53 +272,6 @@
   margin-bottom: 0.9rem;
 }
 
-/* ---------------- SEARCH BAR ---------------- */
-.search-wrap{
-  margin-top: .9rem;
-  width: 100%;
-}
-
-/* default: mobile/tablet = nice wide bar */
-.searchbar{
-  display: flex;
-  align-items: center;
-  gap: .6rem;
-  padding: .55rem .7rem;
-  border-radius: 999px;
-  border: 1px solid rgba(11,11,11,0.12);
-
-  width: 100%;
-  max-width: 560px; /* keeps it from getting too huge on mid screens */
-}
-
-/* "no results" message should match the same width */
-.no-results{
-  margin: .75rem 0 0;
-  padding: .65rem .85rem;
-  border-radius: 14px;
-  border: 1px solid rgba(11,11,11,0.12);
-  background: rgba(255,255,255,0.16);
-  color: rgba(11,11,11,0.74);
-  font-weight: 650;
-
-  width: 100%;
-  max-width: 560px;
-}
-
-/* desktop: make it end halfway across the grid (≈ middle of middle card) */
-@media (min-width: 900px){
-  .searchbar,
-  .no-results{
-    max-width: 50%;
-  }
-}
-
-    /* Ensure the HTML `hidden` attribute always hides elements (overrides display:grid) */
-.search-clear[hidden],
-.no-results[hidden]{
-  display: none !important;
-}
-    
     /* ---------------- GRID ---------------- */
     .grid{
       display: grid;
@@ -615,35 +568,6 @@
           <div>
             <h2 class="section-title">Featured Drops</h2>
             <p class="section-sub">Check out the clothing made by N4!</p>
-            <div class="search-wrap" role="search" aria-label="Search items">
-  <div class="searchbar glass">
-    <!-- magnifying glass -->
-    <svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="rgba(11,11,11,.78)" stroke-width="2"/>
-      <path d="M16.2 16.2 21 21" stroke="rgba(11,11,11,.78)" stroke-width="2" stroke-linecap="round"/>
-    </svg>
-
-    <input
-      id="itemSearch"
-      class="search-input"
-      type="search"
-      placeholder="Search for your item"
-      aria-label="Search for your item"
-      autocomplete="off"
-      spellcheck="false"
-    />
-
-    <!-- clear X (appears only when searching) -->
-    <button id="clearSearch" class="search-clear" type="button" aria-label="Clear search" hidden>
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M6 6l12 12M18 6 6 18" stroke="rgba(11,11,11,.82)" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-    </button>
-  </div>
-</div>
-            <p id="noResults" class="no-results" role="status" aria-live="polite" hidden>
-  No items found. Try a different keyword.
-</p>
           </div>
         </div>
 
@@ -1093,56 +1017,5 @@
       items.forEach(el => io.observe(el));
     })();
     </script>
-
-  <script>
-  // ...your existing code above...
-
-  // Search/filter Featured Drops
-(() => {
-  const input = document.getElementById("itemSearch");
-  const clearBtn = document.getElementById("clearSearch");
-  const noResults = document.getElementById("noResults");
-  const cards = Array.from(document.querySelectorAll(".grid .card"));
-
-  if (!input || !clearBtn || !cards.length) return;
-
-  const applyFilter = () => {
-    const q = input.value.trim().toLowerCase();
-    const active = q.length > 0;
-
-    // X only when user typed something
-    clearBtn.hidden = !active;
-
-    let matches = 0;
-
-    cards.forEach(card => {
-      const title = card.querySelector(".card-title")?.textContent?.trim().toLowerCase() || "";
-      const assetId = card.getAttribute("data-assetid") || "";
-
-      const match = !active || title.includes(q) || assetId.includes(q);
-      card.classList.toggle("is-hidden", !match);
-
-      if (active && match) matches++;
-    });
-
-    // Show "no results" only during an active search with 0 matches
-    if (noResults) noResults.hidden = !(active && matches === 0);
-  };
-
-  input.addEventListener("input", applyFilter);
-
-  clearBtn.addEventListener("click", () => {
-    input.value = "";
-    applyFilter();
-    input.focus();
-  });
-
-  input.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") clearBtn.click();
-  });
-
-  applyFilter();
-})();
-</script>
 </body>
 </html>
