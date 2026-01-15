@@ -275,8 +275,10 @@
 /* ---------------- SEARCH BAR ---------------- */
 .search-wrap{
   margin-top: .9rem;
+  width: 100%;
 }
 
+/* default: mobile/tablet = nice wide bar */
 .searchbar{
   display: flex;
   align-items: center;
@@ -284,60 +286,37 @@
   padding: .55rem .7rem;
   border-radius: 999px;
   border: 1px solid rgba(11,11,11,0.12);
+
+  width: 100%;
+  max-width: 560px; /* keeps it from getting too huge on mid screens */
+}
+
+/* "no results" message should match the same width */
+.no-results{
+  margin: .75rem 0 0;
+  padding: .65rem .85rem;
+  border-radius: 14px;
+  border: 1px solid rgba(11,11,11,0.12);
+  background: rgba(255,255,255,0.16);
+  color: rgba(11,11,11,0.74);
+  font-weight: 650;
+
+  width: 100%;
   max-width: 560px;
 }
 
-.search-icon{
-  width: 18px;
-  height: 18px;
-  opacity: .85;
-  flex: 0 0 auto;
+/* desktop: make it end halfway across the grid (≈ middle of middle card) */
+@media (min-width: 900px){
+  .searchbar,
+  .no-results{
+    max-width: 50%;
+  }
 }
 
-.search-input{
-  flex: 1 1 auto;
-  border: 0;
-  outline: none;
-  background: transparent;
-  color: rgba(11,11,11,0.92);
-  font: inherit;
-  font-weight: 650;
-  padding: .2rem .1rem;
-  min-width: 0;
-}
-
-.search-input::placeholder{
-  color: rgba(11,11,11,0.62);
-  font-weight: 650;
-}
-
-.search-clear{
-  width: 36px;
-  height: 36px;
-  border-radius: 999px;
-  border: 1px solid rgba(11,11,11,0.14);
-  background: rgba(255,255,255,0.20);
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  transition: transform 220ms var(--ease), background-color 220ms var(--ease), box-shadow 220ms var(--ease);
-  flex: 0 0 auto;
-}
-
-.search-clear:hover{
-  transform: translateY(-1px);
-  background: rgba(255,255,255,0.30);
-  box-shadow: 0 14px 26px rgba(11,11,11,0.12);
-}
-
-.search-clear svg{
-  width: 18px;
-  height: 18px;
-}
-
-/* Hide non-matching cards (grid will reflow and page bottom pulls up) */
-.card.is-hidden{
-  display: none;
+    /* Ensure the HTML `hidden` attribute always hides elements (overrides display:grid) */
+.search-clear[hidden],
+.no-results[hidden]{
+  display: none !important;
 }
     
     /* ---------------- GRID ---------------- */
@@ -662,6 +641,9 @@
     </button>
   </div>
 </div>
+            <p id="noResults" class="no-results" role="status" aria-live="polite" hidden>
+  No items found. Try a different keyword.
+</p>
           </div>
         </div>
 
@@ -1116,42 +1098,51 @@
   // ...your existing code above...
 
   // Search/filter Featured Drops
-  (() => {
-    const input = document.getElementById("itemSearch");
-    const clearBtn = document.getElementById("clearSearch");
-    const cards = Array.from(document.querySelectorAll(".grid .card"));
+(() => {
+  const input = document.getElementById("itemSearch");
+  const clearBtn = document.getElementById("clearSearch");
+  const noResults = document.getElementById("noResults");
+  const cards = Array.from(document.querySelectorAll(".grid .card"));
 
-    if (!input || !clearBtn || !cards.length) return;
+  if (!input || !clearBtn || !cards.length) return;
 
-    const applyFilter = () => {
-      const q = input.value.trim().toLowerCase();
-      const active = q.length > 0;
+  const applyFilter = () => {
+    const q = input.value.trim().toLowerCase();
+    const active = q.length > 0;
 
-      clearBtn.hidden = !active;
+    // X only when user typed something
+    clearBtn.hidden = !active;
 
-      cards.forEach(card => {
-        const title = card.querySelector(".card-title")?.textContent?.trim().toLowerCase() || "";
-        const assetId = card.getAttribute("data-assetid") || "";
-        const match = !active || title.includes(q) || assetId.includes(q);
-        card.classList.toggle("is-hidden", !match);
-      });
-    };
+    let matches = 0;
 
-    input.addEventListener("input", applyFilter);
+    cards.forEach(card => {
+      const title = card.querySelector(".card-title")?.textContent?.trim().toLowerCase() || "";
+      const assetId = card.getAttribute("data-assetid") || "";
 
-    clearBtn.addEventListener("click", () => {
-      input.value = "";
-      applyFilter();
-      input.focus();
+      const match = !active || title.includes(q) || assetId.includes(q);
+      card.classList.toggle("is-hidden", !match);
+
+      if (active && match) matches++;
     });
 
-    // Allow ESC to clear search
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") clearBtn.click();
-    });
+    // Show "no results" only during an active search with 0 matches
+    if (noResults) noResults.hidden = !(active && matches === 0);
+  };
 
+  input.addEventListener("input", applyFilter);
+
+  clearBtn.addEventListener("click", () => {
+    input.value = "";
     applyFilter();
-  })();
+    input.focus();
+  });
+
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") clearBtn.click();
+  });
+
+  applyFilter();
+})();
 </script>
 </body>
 </html>
