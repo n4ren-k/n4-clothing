@@ -272,6 +272,118 @@
   margin-bottom: 0.9rem;
 }
 
+/* ---------------- SEARCH ---------------- */
+.sr-only{
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* IMPORTANT: make hidden always win over component display rules */
+[hidden]{ display: none !important; }
+
+.search-wrap{
+  margin-top: .9rem;
+  display: grid;
+  gap: .65rem;
+}
+
+/* make hidden always win (fixes X staying visible) */
+[hidden]{ display: none !important; }
+
+.searchbar{
+  position: relative;
+  width: min(560px, 50vw);
+  max-width: 100%;
+}
+
+@media (max-width: 680px){
+  .searchbar{ width: 100%; }
+}
+
+.search-input{
+  width: 100%;
+  height: 48px;
+  border-radius: 999px;
+
+  /* font matches site */
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 500;
+
+  padding: .75rem 3.2rem .75rem 2.75rem;
+  border: 1px solid rgba(11,11,11,0.14);
+  background: rgba(255,255,255,0.20);
+  color: rgba(11,11,11,0.92);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 10px 22px rgba(11,11,11,0.08);
+
+  position: relative;
+  z-index: 1;
+}
+
+.search-input::placeholder{
+  color: rgba(11,11,11,0.58);
+  font-weight: 500;
+}
+
+/* magnifier above input (fixes it not showing) */
+.search-icon{
+  position: absolute;
+  left: .95rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px; height: 18px;
+  opacity: .82;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* “X” centered to the pill end cap center:
+   input cap radius = 48/2 = 24
+   button radius = 40/2 = 20
+   right offset = 24 - 20 = 4px  */
+.clear-btn{
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 999px;
+  border: 1px solid rgba(11,11,11,0.14);
+  background: rgba(255,255,255,0.18);
+  cursor: pointer;
+
+  z-index: 2;
+}
+
+/* No results centered on the PAGE (container width), not the bar */
+.no-results{
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  padding: .6rem 0;
+
+  font-weight: 750;
+  font-size: 1.05rem;
+  color: rgba(11,11,11,0.72);
+
+  /* JS will set this to place it exactly between bar and creators */
+  transform: translateY(var(--nrShift, 0px));
+}
+
     /* ---------------- GRID ---------------- */
     .grid{
       display: grid;
@@ -568,6 +680,30 @@
           <div>
             <h2 class="section-title">Featured Drops</h2>
             <p class="section-sub">Check out the clothing made by N4!</p>
+            <div class="search-wrap" role="search" aria-label="Search featured items">
+  <div class="searchbar">
+    <label class="sr-only" for="itemSearch">Search for an item</label>
+
+    <svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="rgba(11,11,11,.82)" stroke-width="2"/>
+      <path d="M16.5 16.5 21 21" stroke="rgba(11,11,11,.82)" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+
+    <input
+      id="itemSearch"
+      class="search-input"
+      type="search"
+      placeholder="Search for an item"
+      autocomplete="off"
+    />
+
+    <button id="clearSearch" class="clear-btn" type="button" aria-label="Clear search" hidden>
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M6 6l12 12M18 6 6 18" stroke="rgba(11,11,11,.82)" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+</div>
           </div>
         </div>
 
@@ -1032,6 +1168,7 @@
   </a>
 </article>
         </div>
+        <p id="noResults" class="no-results" role="status" aria-live="polite" hidden>No results</p>
       </div>
     </section>
 
@@ -1124,6 +1261,84 @@
 
       items.forEach(el => io.observe(el));
     })();
+
+// Search filter for Featured Drops
+(() => {
+  const input = document.getElementById("itemSearch");
+  const clearBtn = document.getElementById("clearSearch");
+  const noResults = document.getElementById("noResults");
+  if (!input || !clearBtn || !noResults) return;
+
+  const cards = Array.from(document.querySelectorAll(".grid .card"));
+  const titles = cards.map(card =>
+    (card.querySelector(".card-title")?.textContent || "").toLowerCase()
+  );
+
+  const searchbar = document.querySelector(".searchbar");
+  const creatorsHead =
+    document.querySelector(".owners .section-head") || document.querySelector(".owners");
+
+  function positionNoResults() {
+    if (noResults.hidden) return;
+    if (!searchbar || !creatorsHead) return;
+
+    // reset first
+    noResults.style.setProperty("--nrShift", "0px");
+
+    requestAnimationFrame(() => {
+      const barRect = searchbar.getBoundingClientRect();
+      const creatorsRect = creatorsHead.getBoundingClientRect();
+      const msgRect = noResults.getBoundingClientRect();
+
+      // midpoint between bottom of search bar and top of creators header
+      const midY = (barRect.bottom + creatorsRect.top) / 2;
+
+      // current center of "No results"
+      const msgCenterY = msgRect.top + msgRect.height / 2;
+
+      // shift needed (don’t shift upward past its natural spot)
+      const shift = Math.max(0, midY - msgCenterY);
+
+      noResults.style.setProperty("--nrShift", `${shift}px`);
+    });
+  }
+
+  function applyFilter() {
+    const q = input.value.trim().toLowerCase();
+
+    clearBtn.hidden = (q.length === 0);
+
+    let visibleCount = 0;
+    cards.forEach((card, i) => {
+      const match = !q || titles[i].includes(q);
+      card.style.display = match ? "" : "none";
+      if (match) {
+        visibleCount++;
+        card.classList.add("reveal");
+      }
+    });
+
+    const showNoResults = (q && visibleCount === 0);
+    noResults.hidden = !showNoResults;
+
+    if (showNoResults) positionNoResults();
+    else noResults.style.setProperty("--nrShift", "0px");
+  }
+
+  input.addEventListener("input", applyFilter);
+
+  clearBtn.addEventListener("click", () => {
+    input.value = "";
+    input.focus();
+    applyFilter();
+  });
+
+  window.addEventListener("resize", () => {
+    positionNoResults();
+  });
+
+  applyFilter();
+})();
     </script>
 </body>
 </html>
