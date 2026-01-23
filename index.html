@@ -333,6 +333,22 @@
   font-weight: 500;
 }
 
+/* Hide the built-in clear (X) button on mobile browsers for type="search" */
+.search-input::-webkit-search-cancel-button,
+.search-input::-webkit-search-decoration,
+.search-input::-webkit-search-results-button,
+.search-input::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+
+/* Optional: also neutralize default search styling in iOS */
+.search-input[type="search"] {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
 /* magnifier above input (fixes it not showing) */
 .search-icon{
   position: absolute;
